@@ -1,3 +1,9 @@
+# Bun as Node runtime
+
+Instead of using npm, we are using Bun as the bundler and node runtime
+
+instead of npm run, use bun run
+
 **Svelte 5 Runes Convention**
 
 This document outlines the usage conventions for Svelte 5 runes to keep code consistent and clear.

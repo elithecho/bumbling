@@ -1,38 +1,50 @@
-# sv
+# Bumbling
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+**Modern Childcare Platform — Free to Host, Impossible to Clone**
 
-## Creating a project
+Bumbling is an open-source childcare center management platform built for real-world workflows. It's designed to be clean, fast, and flexible — letting childcare centers track attendance, manage logs, communicate with parents, and run daily operations with ease.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## ✨ Features
+- Multi-center support
+- Role-based access (Super Admin, Center Admin, Teacher, Parent)
+- Classroom and child management
+- Daily logs and incident reporting
+- Parent messaging
+- Modular, extensible backend using Prisma + Svelte
 
+## 🚀 Getting Started
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+git clone https://github.com/yourname/bumbling.git
+cd bumbling
+bun install
+bun dev
 ```
 
-## Developing
+Then visit [`http://localhost:3000/setup`](http://localhost:3000/setup) to initialize your organization and create the first super admin.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## 📦 Tech Stack
+- Frontend: SvelteKit
+- Backend: Bun + Prisma (PostgreSQL)
+- Auth: Password-based (magic links/SSO later)
 
-```bash
-npm run dev
+## 📄 License
+This repository is licensed under the **Business Source License 1.1 (BSL)**.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+You may:
+- Self-host Bumbling and charge for hosting, support, or customization.
 
-## Building
+You may **not**:
+- Sell or repackage Bumbling as a standalone product.
+- Build a competing SaaS from it.
 
-To create a production version of your app:
+See [`LICENSE`](./LICENSE) for full terms.
 
-```bash
-npm run build
-```
+## ❤️ Contributing
+Contributions are welcome! Open issues, submit PRs, or fork and adapt for your center. Just respect the license.
 
-You can preview the production build with `npm run preview`.
+## 🧠 Philosophy
+Bumbling is built for small childcare centers and preschools who deserve great software without the bloat or the price tag. It's designed to feel simple, safe, and scalable.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+---
+
+Built with love by Elijah.
