@@ -3,7 +3,7 @@
   let { user }: { user: User } = $props();
 </script>
 
-<nav class="bg-white shadow-md h-screen w-64 fixed">
+<nav class="bg-white shadow-md h-screen w-64">
   <div class="flex flex-col h-full">
     <div class="px-4 py-6 flex items-center">
       <div class="flex-shrink-0">

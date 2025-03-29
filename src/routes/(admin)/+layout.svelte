@@ -5,8 +5,11 @@
 	let { data, children }: LayoutProps = $props();
 </script>
 
-<main>
-	<Navbar user={data.user} />
-	<!-- +page.svelte is `@render`ed here -->
-	{@render children()}
+<main class="grid grid-cols-12 min-h-screen">
+	<div class="col-span-2">
+		<Navbar user={data.user} />
+	</div>
+	<div class="col-span-10">
+		{@render children()}
+	</div>
 </main>
