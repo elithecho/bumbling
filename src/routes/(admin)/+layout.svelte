@@ -1,15 +1,15 @@
 <script lang="ts">
 	import type { LayoutProps } from './$types';
-  import Navbar from '$lib/components/CommandCentre/Navbar.svelte';
+  import SideNav from '$lib/components/CommandCentre/SideNav.svelte';
 
 	let { data, children }: LayoutProps = $props();
 </script>
 
-<main class="grid grid-cols-12 min-h-screen">
-	<div class="col-span-2">
-		<Navbar user={data.user} />
+<main class="grid grid-cols-5 gap-8 min-h-screen">
+	<div class="col-span-1">
+		<SideNav user={data.user} />
 	</div>
-	<div class="col-span-10">
+	<div class="col-span-4">
 		{@render children()}
 	</div>
 </main>
