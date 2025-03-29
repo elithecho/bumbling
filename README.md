@@ -1,11 +1,12 @@
 # Bumbling
 
-**Modern Childcare Platform — Free to Host, Impossible to Clone**
+**Modern Childcare Platform — Free to Host
 
 Bumbling is an open-source childcare center management platform built for real-world workflows. It's designed to be clean, fast, and flexible — letting childcare centers track attendance, manage logs, communicate with parents, and run daily operations with ease.
 
 ## ✨ Features
 - Multi-center support
+- Single Organization
 - Role-based access (Super Admin, Center Admin, Teacher, Parent)
 - Classroom and child management
 - Daily logs and incident reporting
@@ -14,18 +15,18 @@ Bumbling is an open-source childcare center management platform built for real-w
 
 ## 🚀 Getting Started
 ```bash
-git clone https://github.com/yourname/bumbling.git
+git clone https://github.com/elithecho/bumbling.git
 cd bumbling
 bun install
 bun dev
 ```
 
-Then visit [`http://localhost:3000/setup`](http://localhost:3000/setup) to initialize your organization and create the first super admin.
+Then visit [`http://localhost:5173/setup`](http://localhost:5173/setup) to initialize your organization and create the first super admin.
 
 ## 📦 Tech Stack
 - Frontend: SvelteKit
-- Backend: Bun + Prisma (PostgreSQL)
-- Auth: Password-based (magic links/SSO later)
+- Backend: Bun + Prisma (SQLite/Postgres Planned)
+- Auth: Password-based
 
 ## 📄 License
 This repository is licensed under the **Business Source License 1.1 (BSL)**.
@@ -47,4 +48,4 @@ Bumbling is built for small childcare centers and preschools who deserve great s
 
 ---
 
-Built with love by Elijah.
+Built with love.
