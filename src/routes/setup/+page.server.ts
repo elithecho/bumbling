@@ -2,6 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import type { ValidationError } from 'yup';
 import prisma from '$lib/server/db';
+import { createSession, setSessionCookie } from '$lib/server/session';
 
 
 export const load: PageServerLoad = async () => {
@@ -19,10 +20,11 @@ export const load: PageServerLoad = async () => {
   };
 };
 
-import { setupSchema, extractErrors } from '$lib/server/validation';
+import { setupSchema, extractErrors } from '$lib/server/validations/setupValidation';
 
 export const actions = {
-  default: async ({ request }) => {
+  default: async (event) => {
+    const { request } = event;
     const data = await request.formData();
     const orgName = data.get('orgName');
     const centerName = data.get('centerName');
@@ -75,7 +77,7 @@ export const actions = {
       });
 
       // Create super admin user
-      await prisma.user.create({
+      const user = await prisma.user.create({
         data: {
           email: adminEmail as string,
           name: adminName as string,
@@ -84,7 +86,11 @@ export const actions = {
         }
       });
 
-      throw redirect(303, '/login');
+      // Create session and set cookie for auto-login
+      const session = await createSession(user.id);
+      setSessionCookie(event, session.id, session.expiresAt);
+
+      throw redirect(303, '/');
 
     } catch (error) {
       console.error('Setup error:', error);

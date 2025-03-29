@@ -31,6 +31,7 @@ model User {
   name      String
   passwordHash String?
   role      Role
+  sessions Session[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -40,4 +41,11 @@ enum Role {
   CENTER_ADMIN
   TEACHER
   PARENT
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
 }

@@ -26,7 +26,7 @@ Then visit [`http://localhost:5173/setup`](http://localhost:5173/setup) to initi
 ## 📦 Tech Stack
 - Frontend: SvelteKit
 - Backend: Bun + Prisma (SQLite/Postgres Planned)
-- Auth: Password-based
+- Auth: Password-based ([Lucia](https://lucia-auth.com))
 
 ## 📄 License
 This repository is licensed under the **Business Source License 1.1 (BSL)**.

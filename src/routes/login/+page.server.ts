@@ -1,6 +1,8 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import prisma from '$lib/server/db';
+import { RefillingTokenBucket, Throttler } from '$lib/server/rate-limit';
+import { createSession, setSessionCookie } from '$lib/server/session';
 import * as yup from 'yup';
 
 const loginSchema = yup.object().shape({
@@ -8,9 +10,26 @@ const loginSchema = yup.object().shape({
   password: yup.string().required('Password is required')
 });
 
+const ipBucket = new RefillingTokenBucket<string>(20, 1);
+const loginThrottler = new Throttler<string>([1, 5, 30, 60, 300]); // Increasing timeouts: 1s, 5s, 30s, 1min, 5min
+
+export const load: PageServerLoad = async ({ locals }) => {
+  if (locals.session?.id && locals.user?.id) {
+    return redirect(303, '/');
+  }
+  return {};
+};
+
 export const actions = {
-  default: async ({ request, cookies }) => {
-    const data = await request.formData();
+  default: async (event) => {
+    const clientIP = event.request.headers.get('X-Forwarded-For');
+    if (clientIP !== null && !ipBucket.check(clientIP, 1)) {
+      return fail(429, {
+        error: 'Too many requests'
+      });
+    }
+
+    const data = await event.request.formData();
     const email = data.get('email');
     const password = data.get('password');
 
@@ -33,11 +52,18 @@ export const actions = {
       });
     }
 
+    if (clientIP !== null && !ipBucket.consume(clientIP, 1)) {
+      return fail(429, {
+        error: 'Too many requests'
+      });
+    }
+
     const user = await prisma.user.findUnique({
       where: { email: email as string }
     });
 
     if (!user || !user.passwordHash) {
+      if (email) loginThrottler.consume(email as string);
       return fail(400, {
         error: 'Invalid email or password'
       });
@@ -49,19 +75,18 @@ export const actions = {
     );
 
     if (!isValid) {
+      loginThrottler.consume(email as string);
       return fail(400, {
         error: 'Invalid email or password'
       });
     }
 
-    // Set session cookie
-    cookies.set('session', user.id, {
-      path: '/',
-      httpOnly: true,
-      sameSite: 'strict',
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24 * 30 // 30 days
-    });
+    // Reset throttling on successful login
+    loginThrottler.reset(email as string);
+
+    // Create session and set cookie
+    const session = await createSession(user.id);
+    setSessionCookie(event, session.id, session.expiresAt);
 
     throw redirect(303, '/');
   }
