@@ -90,7 +90,24 @@ Then use it inside a component:
 <p>Doubled: {doubled}</p>
 ```
 
----
+# Sveltekit Server Convention
+Getting data from the server in +page.svelte
+```
+<script>
+  let { data } = $props();
+  let center = $derived(data.center);
+</script>
+```
+On the server side
+```
+export const load: PageServerLoad = async () => {
+  const center = await prisma.center.findOne();
+
+  return {
+    center
+  };
+};
+```
 
 **Guidelines:**
 

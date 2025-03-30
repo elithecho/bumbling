@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { LayoutProps } from './$types';
-  import SideNav from '$lib/components/CommandCentre/SideNav.svelte';
+  import SideNav from '$lib/components/theme/CommandCenter/SideNav.svelte';
 
 	let { data, children }: LayoutProps = $props();
 </script>
