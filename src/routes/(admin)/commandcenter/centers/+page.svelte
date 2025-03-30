@@ -20,7 +20,7 @@
         {#each centers as center}
           <tr>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-              <a href="/admin/commandcenter/centers/{center.id}">{center.name}</a>
+              <a href="/commandcenter/centers/{center.id}">{center.name}</a>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{center.address}</td>
           </tr>

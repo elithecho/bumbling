@@ -2,11 +2,12 @@
   import { enhance } from '$app/forms';
   import type { Center } from '$lib/types';  // Add back the type import
   
-  let data = $props();
-  let center: Center = $derived(data.center);
+  let { data } = $props();
+  let center: Center = $state(data.center);
 </script>
 
 <div class="container mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-4">Edit {center.name}</h1>
   <form use:enhance method="POST">
     <div class="space-y-4">
       <div>

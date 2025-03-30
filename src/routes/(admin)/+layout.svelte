@@ -5,11 +5,11 @@
 	let { data, children }: LayoutProps = $props();
 </script>
 
-<main class="grid grid-cols-5 gap-8 min-h-screen">
+<main class="grid grid-cols-5 min-h-screen">
 	<div class="col-span-1">
 		<SideNav user={data.user} />
 	</div>
-	<div class="col-span-4">
+	<div class="col-span-4 px-12 py-8">
 		{@render children()}
 	</div>
 </main>
