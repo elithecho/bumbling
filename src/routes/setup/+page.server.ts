@@ -1,9 +1,9 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { ValidationError } from 'yup';
 import prisma from '$lib/server/db';
 import { createSession, setSessionCookie } from '$lib/server/session';
-
+import { ZodError } from 'zod';
+import zodErrorSchema from '$lib/utils/zodErrorSchema';
 
 export const load: PageServerLoad = async () => {
   const organization = await prisma.organization.findFirst();
@@ -20,70 +20,61 @@ export const load: PageServerLoad = async () => {
   };
 };
 
-import { setupSchema, extractErrors } from '$lib/server/validations/setupValidation';
+import setupSchema from '$lib/server/validations/setupValidation';
 
 export const actions = {
   default: async (event) => {
     const { request } = event;
-    const data = await request.formData();
-    const orgName = data.get('orgName');
-    const centerName = data.get('centerName');
-    const centerAddress = data.get('centerAddress');
-    const adminEmail = data.get('adminEmail');
-    const adminName = data.get('adminName');
-    const adminPassword = data.get('adminPassword');
+    const formData = await request.formData();
 
-    // Validate the input
-    try {
-      await setupSchema.validate(
-        {
-          orgName,
-          centerName,
-          centerAddress,
-          adminEmail,
-          adminName,
-          adminPassword
-        },
-        { abortEarly: false }
-      );
-    } catch (err) {
-      return fail(400, {
-        errors: extractErrors(err as ValidationError),
-        data: { orgName, centerName, centerAddress, adminEmail, adminName }
-      });
-    }
+    const orgName = formData.get('orgName') as string;
+    const centerName = formData.get('centerName') as string;
+    const centerAddress = formData.get('centerAddress') as string | null;
+    const adminEmail = formData.get('adminEmail') as string;
+    const adminName = formData.get('adminName') as string;
+    const adminPassword = formData.get('adminPassword') as string;
+
+    const data = {
+      orgName,
+      centerName,
+      centerAddress,
+      adminEmail,
+      adminName,
+      adminPassword,
+    };
 
     try {
+      await setupSchema.parseAsync(data);
+
       // Hash the password using Bun's native functionality
-      const passwordHash = await Bun.password.hash(adminPassword as string, {
+      const passwordHash = await Bun.password.hash(adminPassword, {
         algorithm: "bcrypt",
         cost: 4, // number between 4-31
       });
 
-
       // Create organization
       const organization = await prisma.organization.create({
         data: {
-          name: orgName as string
-        }
+          name: orgName,
+        },
       });
 
       // Create center
       await prisma.center.create({
         data: {
-          name: centerName as string,
-          address: centerAddress as string || null
-        }
+          name: centerName,
+          address: centerAddress || null,
+        },
       });
 
       // Create super admin user
       const user = await prisma.user.create({
         data: {
-          email: adminEmail as string,
-          name: adminName as string,
+          email: adminEmail,
+          name: adminName,
           passwordHash,
-          role: 'SUPER_ADMIN'
-        }
+          role: 'SUPER_ADMIN',
+        },
       });
 
       // Create session and set cookie for auto-login
@@ -91,12 +82,24 @@ export const actions = {
       setSessionCookie(event, session.id, session.expiresAt);
 
       throw redirect(303, '/');
+    } catch (err) {
+      if (err instanceof ZodError) {
+        const formattedErrors = zodErrorSchema(err);
+        return fail(400, {
+          error: true,
+          alert: 'Please check the form for errors.',
+          errors: formattedErrors,
+          data,
+        });
+      }
 
-    } catch (error) {
-      console.error('Setup error:', error);
+      console.error('Setup error:', err);
       return fail(500, {
-        error: 'Failed to complete setup'
+        error: true,
+        alert: 'Failed to complete setup.',
+        errors: {},
+        data,
       });
     }
-  }
+  },
 } satisfies Actions;

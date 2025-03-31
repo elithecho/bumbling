@@ -1,25 +1,15 @@
-import * as yup from 'yup';
+import { z } from 'zod';
 
-export const setupSchema = yup.object().shape({
-  orgName: yup.string().required('Organization name is required'),
-  centerName: yup.string().required('Center name is required'),
-  centerAddress: yup.string().nullable(),
-  adminEmail: yup.string().required('Admin email is required').email('Please enter a valid email address'),
-  adminName: yup.string().required('Admin name is required'),
-  adminPassword: yup
-    .string()
-    .required('Password is required')
-    .min(8, 'Password must be at least 8 characters')
-    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
-    .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
-    .matches(/[0-9]/, 'Password must contain at least one number')
+const setupSchema = z.object({
+  orgName: z.string().min(1, { message: 'Organization name is required' }),
+  centerName: z.string().min(1, { message: 'Center name is required' }),
+  centerAddress: z.string().nullable(),
+  adminEmail: z.string().min(1, { message: 'Admin email is required' }).email({ message: 'Please enter a valid email address' }),
+  adminName: z.string().min(1, { message: 'Admin name is required' }),
+  adminPassword: z.string().min(8, { message: 'Password must be at least 8 characters' })
+    .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
+    .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
+    .regex(/[0-9]/, { message: 'Password must contain at least one number' }),
 });
 
-export function extractErrors(err: yup.ValidationError) {
-  return err.inner.reduce<Record<string, string>>((acc, err) => {
-    if (err.path) {
-      acc[err.path] = err.message;
-    }
-    return acc;
-  }, {});
-}
+export default setupSchema;
