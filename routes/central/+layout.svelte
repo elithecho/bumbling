@@ -1,7 +1,15 @@
 <script lang="ts">
-	import type { LayoutData } from './$types'; // Use LayoutData for type safety
+	import type { LayoutProps } from './$types';
+	import SideNav from '$lib/components/theme/CommandCenter/SideNav.svelte';
 
-	let { children }: LayoutData = $props(); // Destructure children directly
+	let { data, children }: LayoutProps = $props();
 </script>
 
-{@render children()}
+<main class="grid grid-cols-5 min-h-screen">
+	<div class="col-span-1">
+		<SideNav user={data.user} />
+	</div>
+	<div class="col-span-4 px-12 py-8">
+		{@render children()}
+	</div>
+</main>
