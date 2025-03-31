@@ -1,6 +1,6 @@
 <script lang="ts">
   let { data } = $props();
-  $: center = data.center;
+  let center = $derived(data.center);
 </script>
 
 <div class="container mx-auto p-4">

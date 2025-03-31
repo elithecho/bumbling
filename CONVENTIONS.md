@@ -30,7 +30,9 @@ let count = $state(0);
 Use `$derived` to create values based on other reactive state.
 
 ```
-let doubled = $derived(count * 2);
+let doubled = $derived(count * 2); // GOOD
+// DO NOT USE THE old $: for reactivity
+$: center = data.center; // BAD
 ```
 
 ### `$effect`
