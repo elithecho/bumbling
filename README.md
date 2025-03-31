@@ -1,4 +1,8 @@
-# Bumbling
+# Bumbling 🚧
+
+**Warning: Work in Progress**
+
+This project is currently under active development and is not yet production-ready. Use with caution.
 
 **Modern Childcare Platform — Free to Host
 
