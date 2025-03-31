@@ -1,5 +1,5 @@
 import { redirect,fail } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad } from '../$types';
 import prisma from '$lib/server/db';
 import type { Center } from '$lib/types';
 import { z, ZodError } from "zod";
