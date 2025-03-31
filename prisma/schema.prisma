@@ -38,7 +38,7 @@ model User {
 
 enum Role {
   SUPER_ADMIN
-  CENTER_ADMIN
+  ADMIN
   TEACHER
   PARENT
 }
