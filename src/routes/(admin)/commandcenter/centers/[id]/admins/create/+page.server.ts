@@ -42,22 +42,19 @@ export const actions: Actions = {
           passwordHash
       }
 
-      // Create center admin relationship
       const user = await prisma.user.create({
         data: {
           ...userData,
-          centers: {
+          center: {
             create: {
               centerId: params.id
             }
           }
         },
         include: {
-          centers: true
+          center: true
         }
       });
-
-      console.log(user)
 
       return {
         success: true,

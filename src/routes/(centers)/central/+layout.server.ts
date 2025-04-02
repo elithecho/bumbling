@@ -3,6 +3,9 @@ import type { User } from '$lib/types';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals }: { locals: { user: User | null } }) => {
+	if (!locals.user) {
+		throw redirect(303, '/login');
+	}
 	if (!["SUPER_ADMIN", "ADMIN"].includes(locals?.user?.role ?? "")) {
 		throw redirect(303, '/login');
 	}
