@@ -130,5 +130,3 @@
 - Finalize naming and branding direction
 
 ---
-
-

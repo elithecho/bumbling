@@ -1,3 +1,7 @@
-import type { Center, User } from '@prisma/client'
+import type { Center, User, CenterAdmin } from '@prisma/client'
 
-export type { Center, User }
+export type { Center, User, CenterAdmin }
+
+export type CenterAdminWithUser = CenterAdmin & {
+  user: User;
+};

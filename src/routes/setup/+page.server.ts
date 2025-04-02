@@ -4,6 +4,7 @@ import prisma from '$lib/server/db';
 import { createSession, setSessionCookie } from '$lib/server/session';
 import { ZodError } from 'zod';
 import zodErrorSchema from '$lib/utils/zodErrorSchema';
+import { passHash, passVerify } from '$lib/utils/password';
 
 export const load: PageServerLoad = async () => {
   const organization = await prisma.organization.findFirst();
@@ -45,12 +46,7 @@ export const actions = {
 
     try {
       await setupSchema.parseAsync(data);
-
-      // Hash the password using Bun's native functionality
-      const passwordHash = await Bun.password.hash(adminPassword, {
-        algorithm: "bcrypt",
-        cost: 4, // number between 4-31
-      });
+      const passwordHash = await passHash(adminPassword);
 
       // Create organization
       const organization = await prisma.organization.create({
