@@ -1,7 +1,8 @@
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { getCenterById } from '$lib/server/collections/centerQueries';
-import { getCenterAdminsByCenterId } from '$lib/server/collections/centerAdminQueries';
+import { getCenterAdminCountByCenterId, getCenterAdminsByCenterId } from '$lib/server/collections/centerAdminQueries';
+import type { CenterAdminWithUser } from '$lib/types';
 
 export const load: PageServerLoad = async ({ params }) => {
   const center = await getCenterById(params.id);
@@ -10,10 +11,15 @@ export const load: PageServerLoad = async ({ params }) => {
     throw redirect(303, '/commandcenter/centers');
   }
 
-  const centerAdmins = await getCenterAdminsByCenterId(center.id);
+  const centerAdminsCount = await getCenterAdminCountByCenterId(center.id);
+  const admins = await getCenterAdminsByCenterId(center.id);
 
   return {
     center,
-    admins: centerAdmins,
+    adminsCount: centerAdminsCount,
+    admins: {
+      items: admins as CenterAdminWithUser[],
+      total: centerAdminsCount,
+    },
   };
 };
