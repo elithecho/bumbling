@@ -2,7 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import prisma from '$lib/server/db';
 import { RefillingTokenBucket, Throttler } from '$lib/server/rate-limit';
-import { createSession, setSessionCookie } from '$lib/server/session';
+import { createSession, setSessionCookie } from '$lib/server/hooks/session';
 import * as yup from 'yup';
 
 const loginSchema = yup.object().shape({

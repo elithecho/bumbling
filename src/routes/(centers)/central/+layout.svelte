@@ -2,7 +2,6 @@
 	import type { LayoutProps } from './$types';
 	import SideNav from '$lib/components/theme/Central/SideNav.svelte';
 
-	// Props including data from the load function and children (page content)
 	let { data, children }: LayoutProps = $props();
 </script>
 

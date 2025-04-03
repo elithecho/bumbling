@@ -1,7 +1,8 @@
 import { RefillingTokenBucket } from "$lib/server/rate-limit";
-import { validateSession, setSessionCookie, deleteSessionCookie } from "$lib/server/session";
+import { validateSession, setSessionCookie, deleteSessionCookie } from "$lib/server/hooks/session";
 import { sequence } from "@sveltejs/kit/hooks";
 import { paraglideMiddleware } from '$lib/paraglide/server';
+import prisma from "$lib/server/db";
 
 import type { Handle } from "@sveltejs/kit";
 
@@ -47,6 +48,25 @@ const authHandle: Handle = async ({ event, resolve }) => {
 	return resolve(event);
 };
 
+import { getCenterFromAdmin, getCenterFromCookie } from "$lib/server/hooks/central";
+
+const centralHandle: Handle = async ({ event, resolve }) => {
+	// Check if the user is admin and center assigned
+	if (event.locals.user && event.locals.user.role === "ADMIN") {
+		const center = await getCenterFromAdmin(event.locals.user.id);
+
+		event.locals.center = center;
+	}
+
+	// if user is SUPER_ADMIN, see if center is assigned
+	if (event.locals.user && event.locals.user.role === "SUPER_ADMIN") {
+		const center = await getCenterFromCookie(event)
+		event.locals.center = center
+	}
+
+	return resolve(event);
+}
+
 const handleParaglide: Handle = ({ event, resolve }) =>
 	paraglideMiddleware(event.request, ({ request, locale }) => {
 		event.request = request;
@@ -56,4 +76,5 @@ const handleParaglide: Handle = ({ event, resolve }) =>
 		});
 	});
 
-export const handle = sequence(rateLimitHandle, authHandle, handleParaglide);
+
+export const handle = sequence(rateLimitHandle, authHandle, handleParaglide, centralHandle);

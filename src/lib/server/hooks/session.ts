@@ -1,5 +1,5 @@
 import { randomBytes } from 'crypto';
-import prisma from './db';
+import prisma from '../db';
 import type { RequestEvent } from '@sveltejs/kit';
 
 export interface Session {

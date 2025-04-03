@@ -12,31 +12,31 @@
 
   <ul class="pt-12">
     <li>
-      <a href="/commandcenter" class="block mt-4 text-gray-900 hover:text-gray-900">Dashboard</a>
+      <a href="/central" class="block mt-4 text-gray-900 hover:text-gray-900">Dashboard</a>
     </li>
     <li>
-      <a href="/commandcenter/centers" class="block mt-4 text-gray-900 hover:text-gray-900">Centres</a>
+      <a href="/central/centers" class="block mt-4 text-gray-900 hover:text-gray-900">Centres</a>
     </li>
     <li>
-      <a href="/commandcenter/classrooms" class="block mt-4 text-gray-900 hover:text-gray-900">Classrooms</a>
+      <a href="/central/classrooms" class="block mt-4 text-gray-900 hover:text-gray-900">Classrooms</a>
     </li>
     <li>
-      <a href="/commandcenter/teachers" class="block mt-4 text-gray-900 hover:text-gray-900">Teachers</a>
+      <a href="/central/teachers" class="block mt-4 text-gray-900 hover:text-gray-900">Teachers</a>
     </li>
     <li>
-      <a href="/commandcenter/children" class="block mt-4 text-gray-900 hover:text-gray-900">Children</a>
+      <a href="/central/children" class="block mt-4 text-gray-900 hover:text-gray-900">Children</a>
     </li>
     <li>
-      <a href="/commandcenter/announcements" class="block mt-4 text-gray-900 hover:text-gray-900">Announcements</a>
+      <a href="/central/announcements" class="block mt-4 text-gray-900 hover:text-gray-900">Announcements</a>
     </li>
     <li>
-      <a href="/commandcenter/incidents" class="block mt-4 text-gray-900 hover:text-gray-900">Incidents</a>
+      <a href="/central/incidents" class="block mt-4 text-gray-900 hover:text-gray-900">Incidents</a>
     </li>
     <li>
-      <a href="/commandcenter/messages" class="block mt-4 text-gray-900 hover:text-gray-900">Messages</a>
+      <a href="/central/messages" class="block mt-4 text-gray-900 hover:text-gray-900">Messages</a>
     </li>
     <li>
-      <a href="/commandcenter/settings" class="block mt-4 text-gray-900 hover:text-gray-900">Settings</a>
+      <a href="/central/settings" class="block mt-4 text-gray-900 hover:text-gray-900">Settings</a>
     </li>
   </ul>
 </nav>

@@ -1,7 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import prisma from '$lib/server/db';
-import { createSession, setSessionCookie } from '$lib/server/session';
+import { createSession, setSessionCookie } from '$lib/server/hooks/session';
 import { ZodError } from 'zod';
 import zodErrorSchema from '$lib/utils/zodErrorSchema';
 import { passHash } from '$lib/utils/password';

@@ -23,6 +23,11 @@
               <a href="/commandcenter/centers/{center.id}">{center.name}</a>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{center.address}</td>
+            <td>
+              <form method="post" action="?/gotoCenter">
+                <input type="hidden" name="centerId" value="{center.id}">
+                <button type="submit" class="text-red-500 hover:text-red-600">Go to Dashboard</button>
+            </td>
           </tr>
         {/each}
       </tbody>
