@@ -15,9 +15,6 @@
       <a href="/central" class="block mt-4 text-gray-900 hover:text-gray-900">Dashboard</a>
     </li>
     <li>
-      <a href="/central/centers" class="block mt-4 text-gray-900 hover:text-gray-900">Centres</a>
-    </li>
-    <li>
       <a href="/central/classrooms" class="block mt-4 text-gray-900 hover:text-gray-900">Classrooms</a>
     </li>
     <li>
