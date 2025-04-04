@@ -2,12 +2,12 @@
   import { enhance, applyAction } from '$app/forms';
   import Alert from '$lib/components/theme/shared/Alert.svelte';
   import FormError from '$lib/components/theme/shared/Form/Error.svelte';
-  
+
   let { data, form } = $props();
 
-  let password = '';
-  let confirmPassword = '';
-  let passwordError = '';
+  let password = $state('');
+  let confirmPassword = $state('')
+  let passwordError = $state('');
 </script>
 
 <div class="container mx-auto p-4">
