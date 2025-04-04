@@ -8,12 +8,15 @@
 - [] Create/manage Classrooms
 - [] Add or invite Teacher accounts
 - [] Register Children and assign to classrooms
+- [] Enrollment for Parents
 - [] Link Guardians to children
 
 ---
 
 ### 📢 Ongoing Operations
 - [] Post Bulletins/Announcements
+  - [x] Allow sending announcements to all parents
+  - [ ] Attachments in announcements
 - [] Monitor Daily Logs
 - [] View/respond to Incident Reports
 - [] Manage Messaging (e.g., broadcast to all parents)

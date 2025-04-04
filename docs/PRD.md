@@ -110,8 +110,8 @@
 - `/classroom` — Teacher dashboard for daily logs, messaging, and child view
 - `/classroom/logs`, `/classroom/incidents`, etc.
 
-**Parents (Notebook)**
-- `/notebook` — Parent portal for viewing child updates, messages, media, and logs
+**Parents (Backpack)**
+- `/backpack` — Parent portal for viewing child updates, messages, media, and logs
 
 ---
 
