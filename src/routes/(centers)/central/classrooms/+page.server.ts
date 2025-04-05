@@ -19,7 +19,7 @@ export const actions: Actions = {
   delete: async ({ locals, request }) => {
     const center = locals.center!;
     const fd = await request.formData()
-    const id = fd.get('id')
+    const id = fd.get('id')?.toString()
     
     try {
       await prisma.classroom.delete({
