@@ -1,8 +1,9 @@
 <script lang="ts">
   import type { Classroom } from '$lib/types';
+  import { enhance } from '$app/forms';
 
   let { data } = $props();
-  let classrooms = $derived(data.classrooms as Classroom[]);
+  let classrooms = $state(data.classrooms as Classroom[]);
 </script>
 
 <div class="px-4 py-8">
@@ -37,8 +38,24 @@
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {new Date(classroom.createdAt).toLocaleDateString()}
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-4">
                 <a href="/central/classrooms/{classroom.id}" class="text-indigo-600 hover:text-indigo-900">View</a>
+                <form
+                  method="POST"
+                  action="?/delete"
+                  class="inline"
+                  use:enhance={() => {
+                    return async ({ result }) => {
+                        console.log(result);
+                      if (result.type === 'success') {
+                        classrooms = classrooms.filter(c => c.id !== classroom.id);
+                      }
+                    };
+                  }}
+                >
+                  <input type="hidden" name="id" value={classroom.id} />
+                  <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                </form>
               </td>
             </tr>
           {/each}

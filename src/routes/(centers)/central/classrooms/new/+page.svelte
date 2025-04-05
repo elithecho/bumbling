@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
   import { enhance, applyAction } from '$app/forms';
   import Alert from '$lib/components/theme/shared/Alert.svelte';
   import FormError from '$lib/components/theme/shared/Form/Error.svelte';
@@ -18,7 +19,11 @@
     action="?/create"
     use:enhance={() => {
       return async ({ result }) => {
-        await applyAction(result);
+        if (result.type === 'redirect') {
+          goto(result.location)
+        } else {
+          await applyAction(result);
+        }
       };
     }}
     class="space-y-6"

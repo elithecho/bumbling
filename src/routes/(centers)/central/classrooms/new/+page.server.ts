@@ -24,9 +24,8 @@ export const actions: Actions = {
           centerId: center.id
         }
       });
-
-      throw redirect(303, '/central/classrooms');
     } catch (err) {
+      console.log(err)
       if (err instanceof ZodError) {
         return fail(400, {
           error: true,
@@ -43,5 +42,7 @@ export const actions: Actions = {
         data: formData
       });
     }
+    // successful
+    redirect(303, '/central/classrooms');
   }
 };
