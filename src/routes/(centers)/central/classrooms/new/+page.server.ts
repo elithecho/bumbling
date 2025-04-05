@@ -1,4 +1,4 @@
-import { z, type ZodError } from 'zod';
+import { z, ZodError } from 'zod';
 import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import prisma from '$lib/server/db';
