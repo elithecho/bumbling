@@ -8,7 +8,7 @@
 
 <div class="px-4 py-8">
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold">Manage Classrooms</h1>
+    <h1 class="text-2xl font-bold">Classrooms</h1>
     <a
       href="/central/classrooms/new"
       class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
@@ -33,13 +33,16 @@
         <tbody class="bg-white divide-y divide-gray-200">
           {#each classrooms as classroom}
             <tr>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{classroom.level}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <a href="/central/classrooms/{classroom.id}" class="text-indigo-600 hover:text-indigo-900">
+                  {classroom.level}
+                </a>
+              </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{classroom.name}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {new Date(classroom.createdAt).toLocaleDateString()}
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-4">
-                <a href="/central/classrooms/{classroom.id}" class="text-indigo-600 hover:text-indigo-900">View</a>
                 <form
                   method="POST"
                   action="?/delete"

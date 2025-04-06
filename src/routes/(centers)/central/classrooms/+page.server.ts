@@ -1,10 +1,10 @@
 import type { Actions, PageServerLoad } from './$types';
 import prisma from '$lib/server/db';
-import { fail, redirect } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ locals }) => {
   const center = locals.center!;
-  
+
   const classrooms = await prisma.classroom.findMany({
     where: { centerId: center.id },
     orderBy: { createdAt: 'desc' }
@@ -20,7 +20,7 @@ export const actions: Actions = {
     const center = locals.center!;
     const fd = await request.formData()
     const id = fd.get('id')?.toString()
-    
+
     try {
       await prisma.classroom.delete({
         where: { id }

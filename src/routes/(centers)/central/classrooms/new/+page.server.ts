@@ -17,7 +17,8 @@ export const actions: Actions = {
 
     try {
       const data = await classroomSchema.parseAsync(formData);
-      const classroom = await prisma.classroom.create({
+
+      await prisma.classroom.create({
         data: {
           level: data.level,
           name: data.name,
